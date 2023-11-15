@@ -1,0 +1,39 @@
+<html>
+    <head></head>
+    <body>
+        <div style="position:sticky;top:0;background-color:#fff;padding:5px;">
+        <button onClick="copyText()">COPY</button>
+        <span id="copyStatus">click to copy</span>
+        <textarea readonly id="result" cols="80" rows="5" wrap="soft" value="">ros2 bag record xxxxx</textarea>
+        </div>
+        {% for k in topics.keys()%}
+        <fieldset>
+            <legend>{{k}}</legend>
+            {% for t in topics[k] %}
+            <div>
+                <input type="checkbox" id="{{t}}" name="{{k}}" value="{{t}}" onchange="onCheckStatusChanged('{{t}}')"/>
+                <label for="{{t}}">{{t}}</label>
+            </div>
+            {% endfor %}
+        </fieldset>
+        {% endfor %}
+        <script>
+            var selected = [];
+            function onCheckStatusChanged(topic){
+                if (document.getElementById(topic).checked){
+                    selected.push(topic)
+                } else {
+                    selected = selected.filter(elm => {return elm != topic});
+                }
+                document.getElementById("result").value = "ros2 bag record" + selected.reduce((a, c) => {return a + " " + c}, "");
+            }
+            function copyText(){
+                let textBox = document.getElementById("result");
+		textBox.select();
+                console.log(textBox.value);
+                navigator.clipboard.writeText(textBox.value);
+                document.getElementById("copyStatus").innerText = "COPIED!";
+            }
+        </script>
+    </body>
+</html>
