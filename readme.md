@@ -1,5 +1,7 @@
 This is a tiny toy for `ros2 bag record`.
 
+![screen-sample](https://github.com/vrano714/ros2-bag-topic-selector/assets/12181846/371bf1e1-a784-438c-8085-46daf6e113a5)
+
 ## Requirements
 
 - flask
